@@ -15,10 +15,11 @@
 * Node
 * Express
 * Handlebars
+
 * NPM packages
 	** express
 	** method-overide
 	** body parser
 
 ## Heroku deployment: 
-## Gitgub link:
+## Github link:
