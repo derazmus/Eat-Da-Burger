@@ -28,15 +28,22 @@ function objToSql(ob) {
 // Object for all our SQL statement functions.
 var orm = {
   all: function(tableInput, cb) {
+    //construct the query string thet returns all rows from the target table
     var queryString = "SELECT * FROM " + tableInput + ";";
+    //perform the database query
     connection.query(queryString, function(err, result) {
       if (err) {
         throw err;
       }
+
+      //return results in a callback
       cb(result);
     });
   },
+
+  //function that insert a single table entry
   create: function(table, cols, vals, cb) {
+    //construct the query string that inserts a single row into the target table
     var queryString = "INSERT INTO " + table;
 
     queryString += " (";
@@ -46,8 +53,9 @@ var orm = {
     queryString += printQuestionMarks(vals.length);
     queryString += ") ";
 
-    console.log(queryString);
+    //console.log(queryString);
 
+    //Perform the database query
     connection.query(queryString, vals, function(err, result) {
       if (err) {
         throw err;
@@ -55,8 +63,9 @@ var orm = {
       cb(result);
     });
   },
-  // An example of objColVals would be {name: panther, sleepy: true}
+  // function for updates on a single table entry
   update: function(table, objColVals, condition, cb) {
+    //constructy the query string that updates a single entry in the target table
     var queryString = "UPDATE " + table;
 
     queryString += " SET ";
@@ -64,20 +73,9 @@ var orm = {
     queryString += " WHERE ";
     queryString += condition;
 
-    console.log(queryString);
-    connection.query(queryString, function(err, result) {
-      if (err) {
-        throw err;
-      }
+    //console.log(queryString);
 
-      cb(result);
-    });
-  },
-  delete: function(table, condition, cb) {
-    var queryString = "DELETE FROM " + table;
-    queryString += " WHERE ";
-    queryString += condition;
-
+    //perform the database query
     connection.query(queryString, function(err, result) {
       if (err) {
         throw err;
@@ -87,6 +85,7 @@ var orm = {
     });
   }
 };
+  
 
 // Export the orm object for the model.
 module.exports = orm;
